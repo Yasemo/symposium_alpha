@@ -2,7 +2,7 @@
 
 A professional AI-powered project management platform with advanced UI features and modular architecture.
 
-## 🚀 Features
+## 🚀 Features m
 
 ### 🎯 **Project Management**
 - **Manual Project Creation**: Create projects with objectives and tasks
