@@ -137,28 +137,6 @@ router.post("/login", async (ctx) => {
   }
 });
 
-// Get current user endpoint (requires authentication)
-router.get("/me", async (ctx) => {
-  try {
-    // This endpoint will be protected by auth middleware
-    const user = ctx.state.user;
-    
-    if (!user) {
-      ctx.response.status = 401;
-      ctx.response.body = { error: "Not authenticated" };
-      return;
-    }
-
-    ctx.response.body = {
-      user: { id: user.id, email: user.email }
-    };
-
-  } catch (error) {
-    console.error("Get user error:", error);
-    ctx.response.status = 500;
-    ctx.response.body = { error: "Internal server error" };
-  }
-});
 
 // Logout endpoint (client-side token removal, server doesn't need to do anything)
 router.post("/logout", (ctx) => {

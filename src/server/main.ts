@@ -21,13 +21,36 @@ app.use(oakCors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-// Auth routes (no auth required) - must come before static file serving
+// Public auth routes (no auth required) - register, login, logout
 app.use(authRoutes.routes());
 app.use(authRoutes.allowedMethods());
 
 // Protected auth routes (require authentication)
 const protectedAuthRoutes = new Router();
 protectedAuthRoutes.use(authMiddleware);
+
+// Add the /me endpoint to protected routes
+protectedAuthRoutes.get("/me", async (ctx) => {
+  try {
+    const user = ctx.state.user;
+    
+    if (!user) {
+      ctx.response.status = 401;
+      ctx.response.body = { error: "Not authenticated" };
+      return;
+    }
+
+    ctx.response.body = {
+      user: { id: user.id, email: user.email, openrouter_api_key: user.openrouter_api_key }
+    };
+
+  } catch (error) {
+    console.error("Get user error:", error);
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal server error" };
+  }
+});
+
 protectedAuthRoutes.put("/api/user/api-key", async (ctx) => {
   try {
     const user = ctx.state.user;

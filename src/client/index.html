@@ -11,9 +11,15 @@
     <div id="app">
         <header class="app-header">
             <h1>Symposium</h1>
-            <div class="user-info">
-                <span id="user-email"></span>
-                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            <div class="header-right">
+                <div id="credit-display" class="credit-display">
+                    <span id="credit-amount">Credits: --</span>
+                    <button id="api-key-btn" class="btn btn-sm btn-secondary">API Key</button>
+                </div>
+                <div class="user-info">
+                    <span id="user-email"></span>
+                    <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                </div>
             </div>
         </header>
 
@@ -58,20 +64,6 @@
             <section class="chat-area">
                 <div class="chat-header">
                     <h2 id="current-objective">Select an objective to start chatting</h2>
-                    <div class="chat-controls">
-                        <select id="model-selector" class="model-selector">
-                            <option value="openai/gpt-4">GPT-4</option>
-                            <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo</option>
-                            <option value="anthropic/claude-3-sonnet">Claude 3 Sonnet</option>
-                            <option value="anthropic/claude-3-haiku">Claude 3 Haiku</option>
-                            <option value="meta-llama/llama-3.1-8b-instruct">Llama 3.1 8B</option>
-                            <option value="meta-llama/llama-3.1-70b-instruct">Llama 3.1 70B</option>
-                        </select>
-                        <div id="credit-display" class="credit-display">
-                            <span id="credit-amount">Credits: --</span>
-                            <button id="api-key-btn" class="btn btn-sm btn-secondary">API Key</button>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="consultant-tabs" id="consultant-tabs">
@@ -85,10 +77,24 @@
                     </div>
 
                     <div class="chat-input-area">
-                        <div class="tag-selector">
-                            <label>Include tags:</label>
-                            <div id="active-tags" class="active-tags">
-                                <!-- Active tags will be shown here -->
+                        <div class="input-controls">
+                            <div class="tag-selector">
+                                <label>Include tags:</label>
+                                <div id="active-tags" class="active-tags">
+                                    <!-- Active tags will be shown here -->
+                                </div>
+                            </div>
+                            
+                            <div class="model-selector-container">
+                                <label for="model-selector">Model:</label>
+                                <select id="model-selector" class="model-selector">
+                                    <option value="openai/gpt-4">GPT-4</option>
+                                    <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                                    <option value="anthropic/claude-3-sonnet">Claude 3 Sonnet</option>
+                                    <option value="anthropic/claude-3-haiku">Claude 3 Haiku</option>
+                                    <option value="meta-llama/llama-3.1-8b-instruct">Llama 3.1 8B</option>
+                                    <option value="meta-llama/llama-3.1-70b-instruct">Llama 3.1 70B</option>
+                                </select>
                             </div>
                         </div>
                         
