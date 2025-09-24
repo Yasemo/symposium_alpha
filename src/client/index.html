@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symposium</title>
+    <link rel="stylesheet" href="/styles/variables.css">
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <div id="app">
+        <header class="app-header">
+            <h1>Symposium</h1>
+            <div class="user-info">
+                <span id="user-email"></span>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <!-- Left Sidebar: Project Management -->
+            <aside class="sidebar-left">
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h2>Projects</h2>
+                        <div class="section-actions">
+                            <button id="new-project-btn" class="btn btn-primary btn-sm">+ New</button>
+                            <button id="generate-project-btn" class="btn btn-secondary btn-sm">🤖 Generate</button>
+                        </div>
+                    </div>
+                    <div id="projects-list" class="projects-list">
+                        <!-- Projects will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h2>Objectives</h2>
+                        <button id="new-objective-btn" class="btn btn-primary btn-sm">+ New</button>
+                    </div>
+                    <div id="objectives-list" class="objectives-list">
+                        <!-- Objectives will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h2>Tasks</h2>
+                        <button id="new-task-btn" class="btn btn-primary btn-sm">+ New</button>
+                    </div>
+                    <div id="tasks-list" class="tasks-list">
+                        <!-- Tasks will be loaded here -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center Panel: Chat Interface -->
+            <section class="chat-area">
+                <div class="chat-header">
+                    <h2 id="current-objective">Select an objective to start chatting</h2>
+                    <div class="chat-controls">
+                        <select id="model-selector" class="model-selector">
+                            <option value="openai/gpt-4">GPT-4</option>
+                            <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                            <option value="anthropic/claude-3-sonnet">Claude 3 Sonnet</option>
+                            <option value="anthropic/claude-3-haiku">Claude 3 Haiku</option>
+                            <option value="meta-llama/llama-3.1-8b-instruct">Llama 3.1 8B</option>
+                            <option value="meta-llama/llama-3.1-70b-instruct">Llama 3.1 70B</option>
+                        </select>
+                        <div id="credit-display" class="credit-display">
+                            <span id="credit-amount">Credits: --</span>
+                            <button id="api-key-btn" class="btn btn-sm btn-secondary">API Key</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="consultant-tabs" id="consultant-tabs">
+                    <button class="tab-btn active" data-tab="chat">Chat</button>
+                    <!-- Consultant tabs will be added here -->
+                </div>
+
+                <div class="chat-content">
+                    <div id="messages-container" class="messages-container">
+                        <!-- Chat messages will be loaded here -->
+                    </div>
+
+                    <div class="chat-input-area">
+                        <div class="tag-selector">
+                            <label>Include tags:</label>
+                            <div id="active-tags" class="active-tags">
+                                <!-- Active tags will be shown here -->
+                            </div>
+                        </div>
+                        
+                        <div class="message-input-container">
+                            <textarea id="message-input" class="message-input" placeholder="Type your message..."></textarea>
+                            <button id="send-btn" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Sidebar: Knowledge Base -->
+            <aside class="sidebar-right">
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h2>Knowledge Base</h2>
+                        <button id="new-card-btn" class="btn btn-primary btn-sm">+ New Card</button>
+                    </div>
+                    
+                    <div class="knowledge-controls">
+                        <input type="text" id="search-cards" class="search-input" placeholder="Search cards...">
+                        <div class="tag-filters" id="tag-filters">
+                            <!-- Tag filter buttons will be added here -->
+                        </div>
+                    </div>
+
+                    <div id="content-cards" class="content-cards">
+                        <!-- Content cards will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h2>Tags</h2>
+                        <button id="new-tag-btn" class="btn btn-primary btn-sm">+ New Tag</button>
+                    </div>
+                    <div id="tags-list" class="tags-list">
+                        <!-- Tags will be loaded here -->
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h2>Welcome to Symposium</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="button" id="register-btn" class="btn btn-secondary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/scripts/services/api.js"></script>
+    <script src="/scripts/services/state.js"></script>
+    <script src="/scripts/components/notifications.js"></script>
+    <script src="/scripts/components/drag-drop.js"></script>
+    <script src="/scripts/components/modal.js"></script>
+    <script src="/scripts/components/sidebar-left.js"></script>
+    <script src="/scripts/components/chat-area.js"></script>
+    <script src="/scripts/components/sidebar-right.js"></script>
+    <script src="/scripts/main.js"></script>
+</body>
+</html>
